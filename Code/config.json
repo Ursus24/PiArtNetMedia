@@ -1,0 +1,5 @@
+{
+  "start_dmx_channel": 1,
+  "artnet_universe": 0,
+  "artnet_bind_ip": "192.168.178.28"
+}
