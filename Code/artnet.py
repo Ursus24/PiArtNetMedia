@@ -1,4 +1,3 @@
-
 from load import load_config
 from python_artnet import Artnet
 

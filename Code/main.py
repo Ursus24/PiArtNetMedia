@@ -2,14 +2,17 @@ from artnet import receive_dmx
 import tkinter
 from PIL import Image, ImageTk
 
+
 def showPIL(pilImage):
     root = tkinter.Tk()
-    w, h = root.winfo_screenwidth(), root.winfo_screenheight()
     root.overrideredirect(1)
-    root.geometry("%dx%d+0+0" % (w, h))
     root.focus_set()
     root.bind("<Escape>", lambda e: (e.widget.withdraw(), e.widget.quit()))
-    canvas = tkinter.Canvas(root, width=w, height=h)
+
+    w = root.winfo_screenwidth()
+    h = root.winfo_screenheight()
+    root.geometry(f"{w}x{h}+0+0")
+    canvas = tkinter.Canvas(root, width=w, height=h, borderwidth=0, highlightthickness=0)
     canvas.pack()
     canvas.configure(background='black')
 
