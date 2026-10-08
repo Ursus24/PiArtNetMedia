@@ -1,16 +1,24 @@
-from load import load_config
+#Imports from Libraries:
+from threading import Event
+from typing import Optional
+
+#Imports from other files:
 from python_artnet import Artnet
 
-def receive_dmx():
-
-    channel, universe, bind_ip = load_config()
+#Function to receive DMX values from Art-Net:s
+def receive_dmx(
+    channel: int,   #Starting DMX channel to listen 10 Channels after that are returned
+    universe: int,  #Art-Net universe to listen to
+    bind_ip: str,   # IP address to bind the Art-Net socket to
+    stop_event: Optional[Event] = None,  # Optional threading event to stop the loop
+):
     channels = list(range(channel, channel + 10))
 
     artnet = Artnet(bind_ip)
     last_values = None
 
     try:
-        while True:
+        while stop_event is None or not stop_event.is_set():
             buffer = artnet.readBuffer()
 
             if buffer is not None and 0 <= universe < len(buffer):
@@ -25,7 +33,5 @@ def receive_dmx():
                     if values != last_values:
                         last_values = values
                         yield values
-    except KeyboardInterrupt:
-        return
     finally:
         artnet.close()
