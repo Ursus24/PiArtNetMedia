@@ -1,15 +1,18 @@
 #Imports from Libraries:
 import tkinter
-from PIL import Image, ImageTk
+from PIL import Image, ImageEnhance, ImageTk
 from pathlib import Path
 
-    _root = None
-    _canvas = None
-    _image_item = None
-    _photo_image = None
+_root = None
+_canvas = None
+_image_item = None
+_photo_image = None
 
-def showImage(image_path):
+def showImage(image_path: str, brightness: int = 255) -> None:
     global _root, _canvas, _image_item, _photo_image
+
+    if not isinstance(brightness, int) or not 0 <= brightness <= 255:
+        raise ValueError("brightness must be an integer from 0 to 255")
 
     if _root is None:
         _root = tkinter.Tk()
@@ -43,6 +46,7 @@ def showImage(image_path):
                 (int(width * ratio), int(height * ratio)),
                 Image.Resampling.LANCZOS,
             )
+        pil_image = ImageEnhance.Brightness(pil_image).enhance(brightness / 255)
         _photo_image = ImageTk.PhotoImage(pil_image, master=_root)
         _canvas.itemconfigure(_image_item, image=_photo_image, state="normal")
     else:
