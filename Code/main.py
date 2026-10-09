@@ -6,7 +6,7 @@ import psutil
 
 #Imports from other files:
 from artnet import receive_dmx
-from output import showImage
+from output import *
 
 #Loading the config file:
 def load_config() -> Tuple[int, int, str]:
@@ -52,58 +52,58 @@ def get_paths(target_folder_name: str) -> List[str]:
 
 
 def main():
-    showImage("")
+    engine = PiMediaEngine()
     paths_pictures = get_paths('Pictures')
     paths_videos = get_paths('Videos')
 
     for values in receive_dmx(start_dmx_channel, artnet_universe, artnet_bind_ip):
         if 0 <= values[0] <= 17:
-            showImage("")
+            engine.show("", values[0], values[2])
 
         elif 18 <= values[1] <= 33:
-            showImage(paths_pictures[0], values[0])
+            engine.show(paths_pictures[0], values[0], values[2])
 
         elif 34 <= values[1] <= 49:
-            showImage(paths_pictures[1], values[0])
+            engine.show(paths_pictures[1], values[0], values[2])
 
         elif 50 <= values[1] <= 65:
-            showImage(paths_pictures[2], values[0])
+            engine.show(paths_pictures[3], values[0], values[2])
 
         elif 66 <= values[1] <= 81:
-            showImage(paths_pictures[3], values[0])
+            engine.show(paths_pictures[4], values[0], values[2])
 
         elif 82 <= values[1] <= 97:
-            showImage(paths_pictures[4], values[0])
+            engine.show(paths_pictures[5], values[0], values[2])
 
         elif 98 <= values[1] <= 113:
-            showImage(paths_pictures[5], values[0])
+            engine.show(paths_pictures[6], values[0], values[2])
 
         elif 114 <= values[1] <= 128:
-            showImage(paths_pictures[6], values[0])
+            engine.show(paths_pictures[7], values[0], values[2])
 
         elif 129 <= values[1] <= 144:
-            showImage(paths_pictures[7], values[0])
+            engine.show(paths_pictures[8], values[0], values[2])
 
         elif 145 <= values[1] <= 160:
-            showImage(paths_pictures[8], values[0])
+            engine.show(paths_pictures[9], values[0], values[2])
 
         elif 161 <= values[1] <= 176:
-            showImage(paths_pictures[9], values[0])
+            engine.show(paths_pictures[10], values[0], values[2])
 
         elif 177 <= values[1] <= 192:
-            showImage(paths_pictures[10], values[0])
+            engine.show(paths_pictures[11], values[0], values[2])
 
         elif 193 <= values[1] <= 208:
-            showImage(paths_pictures[11], values[0])
+            engine.show(paths_pictures[12], values[0], values[2])
 
         elif 209 <= values[1] <= 224:
-            showImage(paths_pictures[12], values[0])
+            engine.show(paths_pictures[13], values[0], values[2])
 
         elif 225 <= values[1] <= 240:
-            showImage(paths_pictures[13], values[0])
+            engine.show(paths_pictures[14], values[0], values[2])
 
         elif 241 <= values[1] <= 255:
-            showImage(paths_pictures[14], values[0])
+            engine.show(paths_pictures[15], values[0], values[2])
 
         else:
             print(f"Value {values[1]} is out of bounds (must be between 1 and 255).")
